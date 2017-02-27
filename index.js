@@ -165,8 +165,11 @@ var KeystoneSitemap = function(keystone, req, res) {
 		//express 3.x.x does not define req.hostname, only req.host
 		//express 4.x.x has separate parameters for hostname and protocol
 		var host = req.hostname ? req.hostname : req.host;
+		
+		var newMap = Object.assign({}, options.map, map);
+
 		sitemap({
-		    map: map,
+		    map: newMap,
 		    route: route,
 		    url: host,
 		    http: req.protocol
