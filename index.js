@@ -119,7 +119,14 @@ var KeystoneSitemap = function(keystone, req, res) {
 			//check what property of the list object is being used as the URL identifier, based on keystone model settings
 			var idParam = list.options.autokey && list.options.autokey.path ? list.options.autokey.path : '_id';
 
-			list.model.find().exec(function(err, results) {
+			var filterObject = {};
+			if(list.key === "Post") {
+				filterObject = {
+					state: 'published'
+				};
+			}
+			
+			list.model.find(filterObject).exec(function(err, results) {
 				if (results && results.length > 0) {
 					results.forEach(function(v,i) {
 						var include = true;
@@ -188,6 +195,7 @@ var KeystoneSitemap = function(keystone, req, res) {
 		req = rq;
 		res = rs;
 		options = opt;
+		map = {};
 
 		parseRoutes();
 	};
